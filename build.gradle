@@ -32,11 +32,21 @@ test {
 	}
 }
 
-task mytask(type: Test) {
-	useJUnitPlatform()
+configurations {
+	mytestImplementation.extendsFrom testImplementation
+	mytestRuntime.extendsFrom testRuntime
+}
 
-	testClassesDirs = sourceSets.test.output.classesDirs
-	classpath = sourceSets.test.runtimeClasspath
+sourceSets {
+	mytest {
+		compileClasspath += main.output + test.output
+		runtimeClasspath += main.output + test.output
+	}
+}
+
+task mytask(type: Test) {
+	testClassesDirs = sourceSets.mytest.output.classesDirs
+	classpath = sourceSets.mytest.runtimeClasspath
 	ignoreFailures true
 
     retry {
