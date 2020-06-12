@@ -1,0 +1,33 @@
+plugins {
+  id "java"
+  id "org.gradle.test-retry" version "1.1.6"
+}
+
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
+javadoc.options.encoding = 'UTF-8'
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+dependencies {
+	repositories {
+		mavenCentral()
+	}
+    testImplementation 'io.cucumber:cucumber-java:4.8.0'
+    testImplementation 'io.cucumber:cucumber-junit:4.8.0'
+    testImplementation 'junit:junit:4.12'
+	testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.3.1'
+}
+
+// Making sure sonar can still be run when tests fail
+test {
+	useJUnitPlatform()
+
+	ignoreFailures true
+	retry {
+		maxRetries = 1
+		maxFailures = 10
+		failOnPassedAfterRetry = false
+	}
+}
