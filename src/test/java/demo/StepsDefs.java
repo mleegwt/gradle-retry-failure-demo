@@ -8,4 +8,9 @@ public class StepsDefs {
     public void aFailingGlueItem() {
         Assert.fail("Intentional failure");
     }
+
+    @Given("a successful glue item")
+    public void aSuccessfulGlueItem() {
+        // Intentionally no check to allow a success.
+    }
 }

@@ -31,3 +31,17 @@ test {
 		failOnPassedAfterRetry = false
 	}
 }
+
+task mytask(type: Test) {
+	useJUnitPlatform()
+
+	testClassesDirs = sourceSets.test.output.classesDirs
+	classpath = sourceSets.test.runtimeClasspath
+	ignoreFailures true
+
+    retry {
+        maxRetries = 1
+        maxFailures = 10
+        failOnPassedAfterRetry = false
+    }
+}
